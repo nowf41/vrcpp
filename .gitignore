@@ -2,3 +2,4 @@
 node_modules/
 .idea/
 *.db
+output_log_*

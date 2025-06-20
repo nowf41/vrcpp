@@ -127,6 +127,25 @@ export class VRCLogDatabase extends sqlite3.Database {
         })
     }
 
+    public getUsers(): Promise<{username: string, vrchat_internal_id: string, last_seen: number}[]> {
+        return new Promise((resolve, reject) => {
+            this.all(
+                `SELECT username, vrchat_internal_id, last_seen FROM users;`,
+                function (err: Error | null, rows: any[]) {
+                    if (err == null) {
+                        resolve(rows.map(row => ({
+                            username: row.username,
+                            vrchat_internal_id: row.vrchat_internal_id,
+                            last_seen: row.last_seen
+                        })));
+                    } else {
+                        reject(err);
+                    }
+                }
+            )
+        })
+    }
+
     public createExchange(sessionId: number, userId: number, startTime: number): Promise<number> {
         return new Promise((resolve, reject) => {
             this.run(
@@ -162,3 +181,5 @@ export class VRCLogDatabase extends sqlite3.Database {
         })
     }
 }
+
+module.exports.VRCLogDatabase = VRCLogDatabase;

@@ -22,7 +22,7 @@ fs.watchFile(logFilePath, (curr, prev) => {
 function scan(filePath: string) {
     console.log(`Scanning file: ${filePath}`);
     const end = fs.statSync(filePath).size - 1;
-    const db = new VRCLogDatabase(process.env.DATABASE_PATH || './vrc_log.db');
+    const db = new VRCLogDatabase(process.env.DATABASE_PATH || '../vrc_log.db');
     const rs = fs.createReadStream(filePath, {
         start: nowScanCursor + 1,
         end: end, // read until the end of the file
